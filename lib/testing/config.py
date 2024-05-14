@@ -1,6 +1,8 @@
 import sqlite3
 from contextlib import contextmanager
 
+DB_NAME = 'music.db'
+
 # Singleton class to handle the database connection
 class DatabaseConnection:
     _instance = None
@@ -27,23 +29,9 @@ class DatabaseConnection:
 
 # Context manager for handling the connection
 @contextmanager
-def get_db_connection(db_name):
-    db = DatabaseConnection(db_name)
+def get_db_connection():
+    db = DatabaseConnection(DB_NAME)
     try:
         yield db.cursor
     finally:
         db.close()
-
-# Usage
-DB_NAME = 'music.db'
-
-with get_db_connection(DB_NAME) as cursor:
-    # Example query to create a table
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS songs (
-        id INTEGER PRIMARY KEY,
-        name TEXT NOT NULL,
-        album TEXT NOT NULL
-    )
-    ''')
-    db.connection.commit()

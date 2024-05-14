@@ -1,0 +1,8 @@
+DB_NAME = 'music.db'
+
+with get_db_connection(DB_NAME) as cursor:
+    # Perform database operations
+    cursor.execute('SELECT * FROM songs')
+    songs = cursor.fetchall()
+    for song in songs:
+        print(song)
